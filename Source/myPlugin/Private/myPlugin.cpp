@@ -3,17 +3,19 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 #include "ImyPlugin.h"
+
 #include "LevelEditor.h"
-#include "Runtime/Slate/Public/Framework/MultiBox/MultiBoxBuilder.h"
-#include "Runtime/Slate/Public/Framework/Application/SlateApplication.h"
-#include "Runtime/Slate/Public/Widgets/Input/SButton.h"
-#include "Editor//MainFrame/Public/Interfaces/IMainFrameModule.h"
+#include "MultiBoxBuilder.h"
+#include "SlateApplication.h"
+#include "SButton.h"
+#include "IMainFrameModule.h"
 #include "SWindow.h"
+#include "DesktopPlatformModule.h"
 
-#define LOCTEXT_NAMESPACE "MyPlugin"
+#define LOCTEXT_NAMESPACE "crssnkyPlugin"
 
 
-class FmyPlugin : public ImyPlugin
+class FGeoTIFF_Importer : public IGeoTIFF_Importer
 {
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
@@ -27,11 +29,11 @@ class FmyPlugin : public ImyPlugin
 	TWeakPtr<SWindow> MyWindow;
 };
 
-IMPLEMENT_MODULE(FmyPlugin, myPlugin)
+IMPLEMENT_MODULE(FGeoTIFF_Importer, myPlugin)
 
 
 
-void FmyPlugin::StartupModule()
+void FGeoTIFF_Importer::StartupModule()
 {
 	// This code will execute after your module is loaded into memory (but after global variables are initialized, of course.)
 	UE_LOG(LogTemp, Warning, TEXT("かいしだよ～"));
@@ -42,18 +44,18 @@ void FmyPlugin::StartupModule()
 		"LevelEditor",
 		EExtensionHook::After,
 		NULL,
-		FMenuExtensionDelegate::CreateRaw(this, &FmyPlugin::OnWindowMenuExtension)
+		FMenuExtensionDelegate::CreateRaw(this, &FGeoTIFF_Importer::OnWindowMenuExtension)
 	);
 	FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
 	LevelEditorModule.GetMenuExtensibilityManager()->AddExtender(Extender);
 
 	IMainFrameModule& MainFrameModule = FModuleManager::LoadModuleChecked<IMainFrameModule>(TEXT("MainFrame"));
 	MainFrameModule.OnMainFrameCreationFinished().AddRaw(
-		this, &FmyPlugin::OnMainFrameLoad
+		this, &FGeoTIFF_Importer::OnMainFrameLoad
 	);
 }
 
-void FmyPlugin::ShutdownModule()
+void FGeoTIFF_Importer::ShutdownModule()
 {
 	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
 	// we call this function before unloading the module.
@@ -69,23 +71,23 @@ void FmyPlugin::ShutdownModule()
 	}
 }
 
-void FmyPlugin::OnWindowMenuExtension(FMenuBuilder & MenuBuilder) {
-	MenuBuilder.BeginSection("MyMenuHook", LOCTEXT("MyMenu", "MyMenu"));
+void FGeoTIFF_Importer::OnWindowMenuExtension(FMenuBuilder & MenuBuilder) {
+	MenuBuilder.BeginSection("crssnkyMenuHook", FText::FromString("crssnkyMenu"));
 	MenuBuilder.AddMenuEntry(
-		LOCTEXT("MyMenuTitle", "MyMenuTitle"),
-		LOCTEXT("MyMenuToolTip", "hello..."),
+		FText::FromString("GeoTIFF Importer"),
+		FText::FromString("GeoTIFF→Landscape"),
 		FSlateIcon(),
-		FUIAction(FExecuteAction::CreateRaw(this, &FmyPlugin::OnMyToolMenu))
+		FUIAction(FExecuteAction::CreateRaw(this, &FGeoTIFF_Importer::OnMyToolMenu))
 	);
 	MenuBuilder.EndSection();
 }
 
-void FmyPlugin::OnMyToolMenu() {
+void FGeoTIFF_Importer::OnMyToolMenu() {
 	UE_LOG(LogTemp, Warning, TEXT("いべんとだよ～"));
 
 	if (!MyWindow.IsValid()) {
 		TSharedPtr<SWindow> Window = SNew(SWindow)
-			.Title(LOCTEXT("FileImporter", "FileImporter"))
+			.Title(FText::FromString("FileImporter"))
 			.ClientSize(FVector2D(300.f, 300.f));
 		MyWindow = TWeakPtr<SWindow>(Window);
 		if (RootWindow.IsValid()) {
@@ -96,25 +98,25 @@ void FmyPlugin::OnMyToolMenu() {
 		}
 		Window->SetContent(
 			SNew(SVerticalBox) + SVerticalBox::Slot().VAlign(VAlign_Center).FillHeight(1.f).Padding(2.f)[
-				SNew(STextBlock).Text(LOCTEXT("Hello", "Hello"))
+				SNew(STextBlock).Text(FText::FromString("Hello"))
 			] + SVerticalBox::Slot().VAlign(VAlign_Center).FillHeight(1.f).Padding(2.f)[
-				SNew(SButton).Text(LOCTEXT("Button", "Button")).OnClicked_Raw(this, &FmyPlugin::OnButtonClicked)
+				SNew(SButton).Text(FText::FromString("Button")).OnClicked_Raw(this, &FGeoTIFF_Importer::OnButtonClicked)
 			]
 					);
 	}
 	MyWindow.Pin()->BringToFront();
 }
 
-void FmyPlugin::OnMainFrameLoad(TSharedPtr<SWindow> InRootWindow, bool bIsNewProjectWindow) {
+void FGeoTIFF_Importer::OnMainFrameLoad(TSharedPtr<SWindow> InRootWindow, bool bIsNewProjectWindow) {
 	if ((!bIsNewProjectWindow) && (InRootWindow.IsValid())) {
 		RootWindow = InRootWindow;
 	}
 }
 
-FReply FmyPlugin::OnButtonClicked() {
+FReply FGeoTIFF_Importer::OnButtonClicked() {
 	UE_LOG(LogTemp, Warning, TEXT("ぼたんだよ～"));
 
-	
+
 
 	return FReply::Handled();
 }

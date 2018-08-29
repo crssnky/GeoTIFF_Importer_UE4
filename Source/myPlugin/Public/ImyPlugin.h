@@ -11,7 +11,7 @@
  * The public interface to this module.  In most cases, this interface is only public to sibling modules 
  * within this plugin.
  */
-class ImyPlugin : public IModuleInterface
+class IGeoTIFF_Importer : public IModuleInterface
 {
 
 public:
@@ -22,9 +22,9 @@ public:
 	 *
 	 * @return Returns singleton instance, loading the module on demand if needed
 	 */
-	static inline ImyPlugin& Get()
+	static inline IGeoTIFF_Importer& Get()
 	{
-		return FModuleManager::LoadModuleChecked< ImyPlugin >( "myPlugin" );
+		return FModuleManager::LoadModuleChecked< IGeoTIFF_Importer >( "myPlugin" );
 	}
 
 	/**
