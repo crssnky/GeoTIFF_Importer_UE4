@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
-#include "ImyPlugin.h"
+#include "IGeoTIFF_Importer.h"
 
 #include "LevelEditor.h"
 #include "MultiBoxBuilder.h"

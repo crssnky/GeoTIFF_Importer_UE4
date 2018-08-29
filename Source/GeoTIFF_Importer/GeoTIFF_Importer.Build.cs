@@ -4,9 +4,9 @@ using System;
 
 namespace UnrealBuildTool.Rules
 {
-	public class myPlugin : ModuleRules
+	public class GeoTIFF_Importer : ModuleRules
 	{
-		public myPlugin(ReadOnlyTargetRules Target) : base(Target)
+		public GeoTIFF_Importer(ReadOnlyTargetRules Target) : base(Target)
 		{
 			PublicIncludePaths.AddRange(
 				new string[] {
@@ -17,7 +17,7 @@ namespace UnrealBuildTool.Rules
 
 			PrivateIncludePaths.AddRange(
 				new string[] {
-					"Developer/myPlugin/Private",
+					"Developer/GeoTIFF_Importer/Private",
 					// ... add other private include paths required here ...
 				}
 				);

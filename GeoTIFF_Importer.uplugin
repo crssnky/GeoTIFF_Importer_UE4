@@ -2,9 +2,9 @@
 	"FileVersion" : 3,
 	"Version" : 1,
 	"VersionName" : "1.0",
-	"FriendlyName" : "my Plugin",
-	"Description" : "This is mine.",
-	"Category" : "Examples",
+	"FriendlyName" : "GeoTIFF Importer",
+	"Description" : "Landscape import heightmap add GeoTIFF",
+	"Category" : "Landscape Importer",
 	"CreatedBy" : "JON's games.",
 	"CreatedByURL" : "",
 	"DocsURL" : "",
@@ -17,7 +17,7 @@
 	"Modules" :
 	[
 		{
-			"Name" : "myPlugin",
+			"Name" : "GeoTIFF_Importer",
 			"Type" : "Developer",
 			"LoadingPhase" : "Default"
 		}
