@@ -8,16 +8,16 @@ namespace UnrealBuildTool.Rules
 	{
 		public GeoTIFF_Importer(ReadOnlyTargetRules Target) : base(Target)
 		{
+			PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 			PublicIncludePaths.AddRange(
 				new string[] {
 					// ... add public include paths required here ...
-					"DesktopPlatform",
 				}
 				);
 
 			PrivateIncludePaths.AddRange(
 				new string[] {
-					"Developer/GeoTIFF_Importer/Private",
+					"GeoTIFF_Importer/Private",
 					// ... add other private include paths required here ...
 				}
 				);
@@ -33,7 +33,8 @@ namespace UnrealBuildTool.Rules
 					"MainFrame",
 					"InputCore",
 					// ... add other public dependencies that you statically link with here ...
-					"DesktopPlatform"
+					"LandscapeEditor",
+					"DesktopPlatform",
 				}
 				);
 
