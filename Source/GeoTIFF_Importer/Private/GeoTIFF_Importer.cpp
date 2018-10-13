@@ -62,6 +62,8 @@ void FGeoTIFF_Importer::ShutdownModule(){
 		IMainFrameModule& MainFrameModule = FModuleManager::LoadModuleChecked<IMainFrameModule>(TEXT("MainFrame"));
 		MainFrameModule.OnMainFrameCreationFinished().RemoveAll(this);
 	}
+
+	OnUnChecked();
 }
 
 void FGeoTIFF_Importer::OnWindowMenuExtension(FMenuBuilder & MenuBuilder){
