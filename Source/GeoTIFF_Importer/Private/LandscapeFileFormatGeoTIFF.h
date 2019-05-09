@@ -12,6 +12,7 @@ private:
 
 public:
 	FLandscapeHeightmapFileFormat_GeoTIFF();
+	~FLandscapeHeightmapFileFormat_GeoTIFF();
 
 	virtual const FLandscapeFileTypeInfo& GetInfo() const override{
 		return FileTypeInfo;

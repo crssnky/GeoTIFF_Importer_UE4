@@ -1,8 +1,8 @@
 ﻿// Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
 
+#include "GeoTIFF_Importer.h"
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
-#include "IGeoTIFF_Importer.h"
 
 #include "LevelEditor.h"
 #include "LandscapeEditorModule.h"
@@ -62,8 +62,6 @@ void FGeoTIFF_Importer::ShutdownModule(){
 		IMainFrameModule& MainFrameModule = FModuleManager::LoadModuleChecked<IMainFrameModule>(TEXT("MainFrame"));
 		MainFrameModule.OnMainFrameCreationFinished().RemoveAll(this);
 	}
-
-	OnUnChecked();
 }
 
 void FGeoTIFF_Importer::OnWindowMenuExtension(FMenuBuilder & MenuBuilder){
