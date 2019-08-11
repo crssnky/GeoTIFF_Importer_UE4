@@ -1,25 +1,24 @@
 {
-	"FileVersion" : 3,
-	"Version" : 1,
-	"VersionName" : "1.0",
-	"FriendlyName" : "GeoTIFF Importer",
-	"Description" : "Landscape import heightmap add GeoTIFF",
-	"Category" : "Landscape Importer",
-	"CreatedBy" : "JON's games.",
-	"CreatedByURL" : "",
-	"DocsURL" : "",
-	"MarketplaceURL" : "",
-	"SupportURL" : "",
-	"EnabledByDefault" : false,
-	"CanContainContent" : false,
-	"IsBetaVersion" : false,
-	"Installed" : false,
-	"Modules" :
-	[
-		{
-			"Name" : "GeoTIFF_Importer",
-			"Type" : "Developer",
-			"LoadingPhase" : "Default"
-		}
-	]
+    "FileVersion": 3,
+    "Version": 1,
+    "VersionName": "1.0",
+    "FriendlyName": "GeoTIFF Importer",
+    "Description": "Landscape import heightmap add GeoTIFF",
+    "Category": "Landscape Importer",
+    "CreatedBy": "JON's",
+    "CreatedByURL": "",
+    "DocsURL": "",
+    "MarketplaceURL": "",
+    "SupportURL": "",
+    "EnabledByDefault": false,
+    "CanContainContent": false,
+    "IsBetaVersion": true,
+    "Installed": false,
+    "Modules": [
+        {
+            "Name": "GeoTIFF_Importer",
+            "Type": "Editor",
+            "LoadingPhase": "Default"
+        }
+    ]
 }
