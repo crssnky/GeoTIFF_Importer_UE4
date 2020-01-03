@@ -8,6 +8,7 @@
 #include "geo_tiffp.h"
 #include "xtiffio.h"
 
+#undef LOCTEXT_NAMESPACE
 #define LOCTEXT_NAMESPACE "LandscapeEditor.NewLandscape"
 
 FLandscapeHeightmapFileFormat_GeoTIFF::FLandscapeHeightmapFileFormat_GeoTIFF() {
