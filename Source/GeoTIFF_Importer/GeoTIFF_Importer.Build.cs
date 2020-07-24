@@ -1,7 +1,6 @@
 // Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
-using System.IO;
 using System;
-using UnrealBuildTool;
+using System.IO;
 
 namespace UnrealBuildTool.Rules
 {

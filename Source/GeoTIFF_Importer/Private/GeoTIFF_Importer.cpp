@@ -6,11 +6,11 @@
 
 #include "LevelEditor.h"
 #include "LandscapeEditorModule.h"
-#include "MultiBoxBuilder.h"
-#include "SlateApplication.h"
-#include "SButton.h"
-#include "IMainFrameModule.h"
-#include "SWindow.h"
+#include "Framework/MultiBox/MultiBoxBuilder.h"
+#include "Framework/Application/SlateApplication.h"
+#include "Widgets/Input/SButton.h"
+#include "Interfaces/IMainFrameModule.h"
+#include "Widgets/SWindow.h"
 #include "DesktopPlatformModule.h"
 #include "LandscapeFileFormatGeoTIFF.h"
 

@@ -3,6 +3,7 @@
 #include "LandscapeFileFormatGeoTIFF.h"
 
 #include <memory>
+#include <algorithm>
 
 #include "geotiff.h"
 #include "geo_tiffp.h"
@@ -28,13 +29,14 @@ FLandscapeHeightmapInfo FLandscapeHeightmapFileFormat_GeoTIFF::Validate(const TC
 	//int readCount;
 
 	// FileOpen
-	std::shared_ptr<TIFF> tiff(XTIFFOpen(TCHAR_TO_ANSI(HeightmapFilename), "r"), XTIFFClose);
-	if (tiff.get() == nullptr) {
+	const auto tmpTiff = XTIFFOpen(TCHAR_TO_ANSI(HeightmapFilename), "r");
+	if (tmpTiff == nullptr) {
 		Result.ResultCode = ELandscapeImportResult::Error;
 		Result.ErrorMessage = LOCTEXT("Import_HeightmapFileReadError", "Error reading heightmap file");
 		return Result;
 	}
 
+	std::shared_ptr<TIFF> tiff(tmpTiff, XTIFFClose);
 	// Rresolution
 	int width, height;
 	if (TIFFGetField(tiff.get(), TIFFTAG_IMAGEWIDTH, &width) == 0) {
@@ -124,22 +126,32 @@ FLandscapeHeightmapImportData FLandscapeHeightmapFileFormat_GeoTIFF::Import(cons
 
 	}
 
+	// SampleFormat
+	uint32 SampleFormat;
+	if (TIFFGetField(tiff.get(), TIFFTAG_SAMPLEFORMAT, &SampleFormat) == 0) {
+		Result.ResultCode = ELandscapeImportResult::Error;
+		Result.ErrorMessage = LOCTEXT("Import_HeightmapFileReadError", "The TIFF file is not defined SAMPLE_FORMAT.");
+		return Result;
+	}
+
 	// data
 	TArray<uint16> data;
-	const int byteSize = sizeof(uint16) / sizeof(uint8);
+	const int byteSize = bitspersample / 8;
+	//const int byteSize = sizeof(uint16) / sizeof(uint8);
 	const uint32 ScanlineSize = TIFFScanlineSize(tiff.get()) / byteSize;
-	uint16* buf = new uint16[ScanlineSize];
+	TArray<float> buf;
+	buf.SetNum(ScanlineSize);
 	data.Empty(width * height);
 	for (uint32 i = 0; i < height; i++) {
 		// ReadLine
-		TIFFReadScanline(tiff.get(), buf, i);
+		TIFFReadScanline(tiff.get(), buf.GetData(), i);
 		for (uint32 j = 0; j < ScanlineSize; j++) {
-			data.Emplace(buf[j] + 32788u);
+			data.Emplace(buf[j] < 32788u ? buf[j] + 32788u : std::numeric_limits<uint16>::max());
 		}
 	}
 	Result.Data.Empty(ExpectedResolution.Width * ExpectedResolution.Height);
 	Result.Data.AddUninitialized(ExpectedResolution.Width * ExpectedResolution.Height);
-	FMemory::Memcpy(Result.Data.GetData(), data.GetData(), ExpectedResolution.Width * ExpectedResolution.Height * byteSize);
+	FMemory::Memcpy(Result.Data.GetData(), data.GetData(), ExpectedResolution.Width * ExpectedResolution.Height * sizeof(uint16));
 
 	return Result;
 }
