@@ -139,19 +139,19 @@ FLandscapeHeightmapImportData FLandscapeHeightmapFileFormat_GeoTIFF::Import(cons
 	const int byteSize = bitspersample / 8;
 	//const int byteSize = sizeof(uint16) / sizeof(uint8);
 	const uint32 ScanlineSize = TIFFScanlineSize(tiff.get()) / byteSize;
-	TArray<float> buf;
+	TArray<uint16> buf;
 	buf.SetNum(ScanlineSize);
 	data.Empty(width * height);
 	for (uint32 i = 0; i < height; i++) {
 		// ReadLine
 		TIFFReadScanline(tiff.get(), buf.GetData(), i);
 		for (uint32 j = 0; j < ScanlineSize; j++) {
-			data.Emplace(buf[j] < 32788u ? buf[j] + 32788u : std::numeric_limits<uint16>::max());
+			data.Emplace(buf[j] + 32788u);
 		}
 	}
 	Result.Data.Empty(ExpectedResolution.Width * ExpectedResolution.Height);
 	Result.Data.AddUninitialized(ExpectedResolution.Width * ExpectedResolution.Height);
-	FMemory::Memcpy(Result.Data.GetData(), data.GetData(), ExpectedResolution.Width * ExpectedResolution.Height * sizeof(uint16));
+	FMemory::Memcpy(Result.Data.GetData(), data.GetData(), ExpectedResolution.Width * ExpectedResolution.Height * byteSize);
 
 	return Result;
 }
