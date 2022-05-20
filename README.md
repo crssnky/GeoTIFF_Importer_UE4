@@ -1,5 +1,5 @@
 # GeoTIFF_Importer_UE4
-Plugin:GeoTIFF Landscape for UE4
+Plugin:GeoTIFF Landscape for UE4, UE5
 
 ## Caution
 This plugin required "**libtiff**", "**libgeotiff**".  
