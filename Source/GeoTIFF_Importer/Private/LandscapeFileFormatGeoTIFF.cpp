@@ -22,7 +22,7 @@ FLandscapeHeightmapFileFormat_GeoTIFF::~FLandscapeHeightmapFileFormat_GeoTIFF() 
 
 }
 
-FLandscapeHeightmapInfo FLandscapeHeightmapFileFormat_GeoTIFF::Validate(const TCHAR* HeightmapFilename) const {
+FLandscapeHeightmapInfo FLandscapeHeightmapFileFormat_GeoTIFF::Validate(const TCHAR* HeightmapFilename, FName layerName) const {
 	FLandscapeHeightmapInfo Result;
 
 	// tmp
@@ -74,7 +74,7 @@ FLandscapeHeightmapInfo FLandscapeHeightmapFileFormat_GeoTIFF::Validate(const TC
 	return Result;
 }
 
-FLandscapeHeightmapImportData FLandscapeHeightmapFileFormat_GeoTIFF::Import(const TCHAR* HeightmapFilename, FLandscapeFileResolution ExpectedResolution) const {
+FLandscapeHeightmapImportData FLandscapeHeightmapFileFormat_GeoTIFF::Import(const TCHAR* HeightmapFilename, FName layerName, FLandscapeFileResolution ExpectedResolution) const {
 	FLandscapeHeightmapImportData Result;
 
 	// FileOpen

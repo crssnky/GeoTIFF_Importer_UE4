@@ -18,7 +18,7 @@ public:
 		return FileTypeInfo;
 	}
 
-	virtual FLandscapeHeightmapInfo Validate(const TCHAR* HeightmapFilename)const override;
-	virtual FLandscapeHeightmapImportData Import(const TCHAR* HeightmapFilename, FLandscapeFileResolution ExpectedResolution)const override;
+	virtual FLandscapeHeightmapInfo Validate(const TCHAR* HeightmapFilename, FName layerName)const override;
+	virtual FLandscapeHeightmapImportData Import(const TCHAR* HeightmapFilename, FName layerName, FLandscapeFileResolution ExpectedResolution)const override;
 };
 

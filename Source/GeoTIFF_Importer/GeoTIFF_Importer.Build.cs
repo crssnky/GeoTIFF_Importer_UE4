@@ -59,7 +59,7 @@ namespace UnrealBuildTool.Rules
 		{
 			bool isLibrarySupported = false;
 
-			if ((Target.Platform == UnrealTargetPlatform.Win64) || (Target.Platform == UnrealTargetPlatform.Win32))
+			if (Target.Platform == UnrealTargetPlatform.Win64)
 			{
 				isLibrarySupported = true;
 				string LibrariesPathTIFF = Path.Combine(ThirdPartyPath, "libtiff", "libs");
